@@ -19,7 +19,7 @@ func InitEcho() *echo.Echo {
 	e.Static(staticPath, "public")
 
 	// register template renderer
-	e.Renderer = newTemplateRenderer("src/templates", ".html", i18n.I18)
+	e.Renderer = newTemplateRenderer("views", ".html", i18n.I18)
 
 	return e
 }

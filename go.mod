@@ -1,9 +1,10 @@
-module github.com/LTNB/go-echo-template
+module server
 
 go 1.13
 
 require (
 	github.com/LTNB/go-dal v0.1.0
+	github.com/LTNB/go-echo-template v0.0.0-20200229044152-44c12c4dc05f
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/elastic/go-elasticsearch/v8 v8.0.0-20200220082642-d7c6fc0b4807
 	github.com/go-akka/configuration v0.0.0-20200115015912-550403a6bd87

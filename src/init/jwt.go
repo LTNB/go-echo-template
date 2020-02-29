@@ -16,10 +16,23 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
+var jwtConf *JWTConf
+
+type JWTConf struct {
+	expireTime time.Duration
+	secret []byte
+}
+
 var jwtKey = []byte("my_secret_key")
 
+func InitJWTConf(expireTime time.Duration, secret string){
+	jwtConf = &JWTConf{
+		expireTime: expireTime,
+		secret:     []byte(secret),
+	}
+}
 func GenerateToken(data map[string]interface{}) (string, error) {
-	expirationTime := time.Now().Add(5 * time.Minute)
+	expirationTime := time.Now().Add(jwtConf.expireTime)
 
 	claims := &Claims{
 		Data: data,
@@ -32,7 +45,7 @@ func GenerateToken(data map[string]interface{}) (string, error) {
 	// Declare the token with the algorithm used for signing, and the claims
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	// Create the JWT string
-	tokenString, err := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString(jwtConf.secret)
 	return tokenString, err
 }
 
@@ -43,7 +56,7 @@ func ParseToken(tokenStr string) map[string]interface{} {
 	// if the token is invalid (if it has expired according to the expiry time we set on sign in),
 	// or if the signature does not match
 	token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
-		return jwtKey, nil
+		return jwtConf.secret, nil
 	})
 
 	if err != nil || !token.Valid {

@@ -2,6 +2,8 @@ github.com/Knetic/govaluate v3.0.0+incompatible/go.mod h1:r7JcOSlj0wfOMncg0iLm8L
 github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible/go.mod h1:r7JcOSlj0wfOMncg0iLm8Leh48TZaKVeNIfJntJ2wa0=
 github.com/LTNB/go-dal v0.1.0 h1:qUaZ+pRHrscU3QZpNxEHCsN4YULKnFlGxwvlnZvQztM=
 github.com/LTNB/go-dal v0.1.0/go.mod h1:QA2kIz4Rp+pxNtvzFMuOQuZNM87wXdvp6N19LEpMovU=
+github.com/LTNB/go-echo-template v0.0.0-20200229044152-44c12c4dc05f h1:7288FlWOdTkke23IGTxMrD0Q90HsQ/I4q3Ong1v5PEY=
+github.com/LTNB/go-echo-template v0.0.0-20200229044152-44c12c4dc05f/go.mod h1:H2XSkdNYYRAu7bonkLNv+KVAQs3Ugoiwy8KX0A1vLeU=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
 github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf/go.mod h1:ybxpYRFXyAe+OPACYpWeL0wqObRcbAqCMya13uyzqw0=
 github.com/appleboy/gofight/v2 v2.1.1/go.mod h1:6E7pthKhmwss84j/zEixBNim8Q6ahhHcYOtmW5ts5vA=
