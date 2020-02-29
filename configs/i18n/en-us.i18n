@@ -1,0 +1,44 @@
+en-us {
+    text {
+
+        title_dashboard = "Home"
+        title_login = "Login"
+
+        nav_user_management = "User management"
+        nav_logout = "Logout"
+
+        btn_add = "Add"
+
+        field_email = "Email"
+        field_full_name = "Fullname"
+        field_role = "Role"
+        field_action = "Action"
+        field_active = "Active"
+        field_password = "Password"
+        field_password_confirm = "Confirm Password"
+
+        lb_user_info = "User Info"
+        lb_login = "LOGIN"
+        lb_email = "Email"
+        lb_password = "Password"
+
+        btn_close = "Close"
+        btn_save = "Save"
+        btn_submit = "Submit"
+
+        success_form_create = "Add %s success"
+        success_form_update = "Update %s success"
+        success_login = "Login Success"
+
+        success_api_delete = "Delete success"
+
+        warn_user_not_change = "User not change"
+
+        error_form_400 = "Input invalid"
+        error_form_email_existed = "Email is existed"
+        error_user_update = "Update user info failed, try again"
+        error_login_failed = "Login failed"
+        error_user_not_found = User not found
+        error_delete_demo_account = Can't delete demo account
+    }
+}

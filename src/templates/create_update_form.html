@@ -1,0 +1,82 @@
+{{define "title"}}{{.i18n.Text "title_dashboard"}}{{end}}
+{{define "page_css"}}
+    <link rel="stylesheet" href="{{.static}}/lib/home/home.css">
+{{end}}
+{{define "page_js"}}
+    <script src="{{.static}}/lib/home/home.js"></script>
+{{end}}
+{{define "content"}}
+    <form class="form-horizontal" method="post">
+        <div class="card-body">
+            {{if .error}}
+                <p class="alert alert-danger" role="alert">{{.error}}</p>
+            {{end}}
+
+            {{if .warn}}
+                <p class="alert alert-warning" role="alert">{{.warn}}</p>
+            {{end}}
+            <div class="form-group row">
+                <input type="hidden" id="id" name="id" {{if and .data .data.id}}value="{{.data.id}}" {{end}} />
+                <label for="email" class="col-sm-2 col-form-label">{{.i18n.Text "field_email"}}</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" name="email"
+                           {{if and .data .data.email}}value="{{.data.email}}" {{end}}
+                           placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="password" class="col-sm-2 col-form-label">{{.i18n.Text "field_password"}}</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="{{.i18n.Text "field_password"}}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="password_confirm" class="col-sm-2 col-form-label">{{.i18n.Text "field_password_confirm"}}</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="password_confirm" name="password_confirm"
+                           placeholder="{{.i18n.Text "field_password_confirm"}}">
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label for="full_name"
+                       class="col-sm-2 col-form-label">{{.i18n.Text "field_full_name"}}</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="full_name"
+                           name="full_name" {{if and .data .data.full_name}} value="{{.data.full_name}}" {{end}}
+                           placeholder="{{.i18n.Text "field_full_name"}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="active" class="col-sm-2 col-form-label">{{.i18n.Text "field_active"}}</label>
+                <div class="col-sm-10">
+                    <input type="checkbox" class="form-control" id="active" name="active"
+                           value="1" {{if and .data .data.active}} checked="checked"{{end}}
+                           placeholder="{{.i18n.Text "field_active"}}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="role" class="col-sm-2 col-form-label">{{.i18n.Text "field_role"}}</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="role" name="role">
+                        <option value="ADMIN" {{if and .data .data.role }} {{if eq .data.role ("ADMIN") }}selected {{end}}{{end}} >
+                            Admin
+                        </option>
+                        <option value="USER" {{if and .data .data.role }} {{if eq .data.role ("USER") }}selected {{end}}{{end}}>
+                            User
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-default float-right"
+                    data-dismiss="modal">{{.i18n.Text "btn_close"}}</button>
+            <button type="submit" class="btn btn-primary float-right">{{.i18n.Text "btn_save"}}</button>
+        </div>
+    </form>
+{{end}}

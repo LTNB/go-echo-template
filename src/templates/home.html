@@ -1,0 +1,66 @@
+{{define "title"}}{{.i18n.Text "title_dashboard"}}{{end}}
+{{define "page_css"}}
+    <link rel="stylesheet" href="{{.static}}/lib/home/home.css">
+{{end}}
+{{define "page_js"}}
+    <script src="{{.static}}/lib/home/home.js"></script>
+{{end}}
+{{define "content"}}
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><span>{{.i18n.Text "title_dashboard"}}</span></h3>
+                        <div class="card-tools">
+                            <a href="/cp/user/create">
+                                <button type="button" class="btn btn-primary">
+                                    <i class="fas fa-plus">{{.i18n.Text "btn_add"}}</i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body" data-id="body">
+                        {{if .flash}}
+                                <p class="alert alert-info" role="alert" data-id="flash-msg">{{.flash}}</p>
+                        {{end}}
+
+                        <table id="example2" data-id="data-table" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th><span>{{.i18n.Text "field_email"}}</span></th>
+                                <th><span>{{.i18n.Text "field_full_name"}}</span></th>
+                                <th><span>{{.i18n.Text "field_role"}}</span></th>
+                                <th><span>{{.i18n.Text "field_action"}}</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{ range .bo_list }}
+                                <tr id="{{ .id}}">
+                                    <td>{{ .email }}</td>
+                                    <td>{{ .full_name}}</td>
+                                    <td>{{ .role}}</td>
+                                    <td>
+                                        <input type="hidden" name="id" value="{{ .id}}"/>
+                                        <a href="/cp/user/edit/{{ .id}}">
+                                            <button class="btn btn-warning edit-user">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </a>
+                                        <button class="btn btn-danger delete-user" data-id="btn-delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            {{ end }}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{{end}}

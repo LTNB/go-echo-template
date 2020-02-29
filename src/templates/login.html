@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{.i18n.Text "title_login"}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="stylesheet" href="{{.static}}/bower/admin-lte/plugins/fontawesome-free/css/all.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet"
+          href="{{.static}}/bower/admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{.static}}/bower/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{.static}}/bower/admin-lte/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{.static}}/bower/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{.static}}/bower/admin-lte/plugins/summernote/summernote-bs4.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{.static}}/bower/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Main content -->
+<div id="login">
+    <h3 class="text-center text-white pt-5">Login form</h3>
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form" action="" method="post">
+                        <h3 class="text-center text-info">{{.i18n.Text "lb_login"}}</h3>
+                        <div class="form-group">
+                            <label for="email" class="text-info">{{.i18n.Text "lb_email"}}:</label><br>
+                            <input type="text" name="email" id="email" data-id="email" class="form-control" {{if and .data .data.email}} value="{{.data.email}}" {{end}} />
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="text-info">{{.i18n.Text "lb_password"}}:</label><br>
+                            <input type="password" name="password" id="password" {{if and .data .data.password}} value="{{.data.password}}" {{end}}
+                                   data-id="password-interface" class="form-control">
+{{/*                            <input type="hidden" name="password" id="password" data-id="password" class="form-control">*/}}
+                        </div>
+                        {{if .error}}
+                        <div class="float-right"> <span class="text-left text-red">{{.error}}</span></div>
+                        {{end}}
+
+                        <div class="form-group">
+                            <select class="selectpicker" data-width="fit" data-id="select-lang" name="locale" >
+                                <option data-content='<span class="flag-icon flag-icon-vn"></span> Tiếng Việt' value="vi-vn">Tiếng Việt</option>
+                                <option data-content='<span class="flag-icon flag-icon-us"></span> English' value="en-us">English</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="{{.i18n.Text "btn_submit"}}">
+                        </div>
+                        <div class="text-left">
+                            <span>{{.i18n.Text "lb_email"}}: baolam0307@gmail.com</span>
+                        </div>
+                        <div class="text-left">
+                            <span>{{.i18n.Text "lb_password"}}: 123456</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{.static}}/bower/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="{{.static}}/bower/admin-lte/plugins/datatables/jquery.dataTables.js"></script>
+<script src="{{.static}}/bower/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<!-- AdminLTE App -->
+<script src="{{.static}}/bower/admin-lte/dist/js/adminlte.js"></script>
+<!-- AdminLTE App -->
+<script src="{{.static}}/bower/admin-lte/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{.static}}/bower/admin-lte/dist/js/demo.js"></script>
+<!-- AdminLTE App -->
+<script src="{{.static}}/bower/admin-lte/dist/js/adminlte.js"></script>
+
+<!-- jQuery UI 1.11.4 -->
+<script src="{{.static}}/bower/admin-lte/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="{{.static}}/bower/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+{{/*<script src="{{.static}}/bower/bcryptjs/dist/bcrypt.js"></script>*/}}
+<script src="{{.static}}/lib/login/login.js"></script>
+</body>
+
+</html>

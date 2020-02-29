@@ -1,0 +1,44 @@
+vi-vn {
+    text {
+        title_dashboard = "Trang Nhà"
+        title_login = "Đăng nhập"
+
+        nav_user_management = "Quản lý người dùng"
+        nav_logout = "Đăng xuất"
+
+        field_email = "Email"
+        field_full_name = "Họ và tên"
+        field_role = "Quyền"
+        field_action = "Hành động"
+        field_active = "Hoạt động"
+        field_password = "Mật khẩu"
+        field_password_confirm = "Nhập lại mật khẩu"
+
+        btn_add = "Thêm"
+        btn_close = "Đóng"
+        btn_save = "Lưu"
+        btn_submit = "Gửi"
+
+        lb_user_info = "Thông tin người dùng"
+        lb_login = "ĐĂNG NHẬP"
+        lb_email = "Email"
+        lb_password = "Mật khẩu"
+
+
+        success_form_create = "Thêm thông tin [%s] thành công"
+        success_form_update = "Sửa thông tin [%s] thành công"
+        success_login = "Đăng nhập thành công"
+
+        success_api_delete = "Xoá thành công"
+
+        warn_user_not_change = "Không có sự thay đổi"
+
+        error_form_400 = "Sai thông tin nhập vào"
+        error_form_email_existed = "Thông tin email đã tồn tại"
+        error_user_update = "Cập nhật thông tin User thất bại, thử lại sau"
+        error_login_failed = "Đăng nhập thất bại"
+        error_user_not_found = "Không tìm thấy người dùng"
+        error_delete_demo_account = "Không thể xoá tài khoản demo"
+
+    }
+}
