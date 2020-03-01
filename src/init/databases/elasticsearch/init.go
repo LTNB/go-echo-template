@@ -37,6 +37,9 @@ type ClientMultiNode struct {
 	client              *elasticsearch.Client
 }
 
+/*
+ * create client as ES's single node
+ */
 func (conf ClientSingleNode) Init() error {
 	var err error
 	getDefaultConf(&conf.Host, &conf.Port, &conf.MaxIdleConnsPerHost)
@@ -50,6 +53,9 @@ func (conf ClientSingleNode) Init() error {
 	return err
 }
 
+/*
+ * create client as ES's multi node
+ */
 func (conf ClientMultiNode) Init() error {
 	var err error
 	conf.client, err = initClient(conf.Username, conf.Password, conf.Addresses, conf.MaxIdleConnsPerHost)
@@ -57,6 +63,9 @@ func (conf ClientMultiNode) Init() error {
 	return err
 }
 
+/*
+ * create default localhost and default port config
+ */
 func getDefaultConf(host, port *string, maxIdleConnsPerHost *int) {
 	if host == nil {
 		hostDefault := "localhost"
@@ -71,6 +80,9 @@ func getDefaultConf(host, port *string, maxIdleConnsPerHost *int) {
 		maxIdleConnsPerHost = &maxIdleConnsPerHostDefault
 	}
 }
+/*
+ * init client
+ */
 
 func initClient(username, password string, addresses []string, maxIdleConnsPerHost int) (*elasticsearch.Client, error) {
 	esConf := elasticsearch.Config{
@@ -89,14 +101,17 @@ func initClient(username, password string, addresses []string, maxIdleConnsPerHo
 	return elasticsearch.NewClient(esConf)
 }
 
-func (client ClientSingleNode) write(index string, docId string, body []byte) (map[string]interface{}, error) {
-	return send(index, docId, body, client.client)
+func (conf ClientSingleNode) write(index string, docId string, body []byte) (map[string]interface{}, error) {
+	return send(index, docId, body, conf.client)
 }
 
-func (client ClientMultiNode) write(index string, docId string, body []byte) (map[string]interface{}, error) {
-	return send(index, docId, body, client.client)
+func (conf ClientMultiNode) write(index string, docId string, body []byte) (map[string]interface{}, error) {
+	return send(index, docId, body, conf.client)
 }
 
+/*
+ * send ....
+ */
 func send(index string, docId string, body []byte, trans esapi.Transport) (map[string]interface{}, error) {
 	req := esapi.IndexRequest{
 		Index:      index,
@@ -123,10 +138,16 @@ func send(index string, docId string, body []byte, trans esapi.Transport) (map[s
 	return r, err
 }
 
+/*
+ * get SingleNode has been created
+ */
 func GetSingleNodeClient() *ClientSingleNode {
 	return clientSingleNode
 }
 
+/*
+ * get MiltiNode has been created
+ */
 func GetMultiNodeClient() *ClientMultiNode {
 	return clientMultiNode
 }

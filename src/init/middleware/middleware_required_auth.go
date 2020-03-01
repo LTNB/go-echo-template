@@ -1,11 +1,11 @@
 package middleware
 
 import (
-	config "github.com/LTNB/go-echo-template/src/init"
-	echo2 "github.com/LTNB/go-echo-template/src/init/echo"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"net/url"
+	config "main/src/init"
+	echo2 "main/src/init/echo"
 	"time"
 )
 
@@ -39,6 +39,9 @@ func GetDefaultRequiredAuthConfig() *RequiredAuthConf {
 	return &instance
 }
 
+/*
+ * filter request and authenticate
+ */
 func (requiredAuth RequiredAuthConf) MiddlewareRequiredAuth(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		sess := echo2.GetSession(c)
@@ -54,6 +57,9 @@ func (requiredAuth RequiredAuthConf) MiddlewareRequiredAuth(next echo.HandlerFun
 	}
 }
 
+/*
+ * check session login
+ */
 func (requiredAuth RequiredAuthConf) checkSession(token string) bool {
 	return requiredAuth.ILoginHandler.CheckSession(token)
 }
@@ -61,6 +67,9 @@ func (requiredAuth RequiredAuthConf) checkSession(token string) bool {
 type DefaultLoginHandler struct {
 }
 
+/*
+ * check session login implement
+ */
 func (defaultLoginHandler DefaultLoginHandler) CheckSession(token string) bool {
 	data := config.ParseToken(token)
 	if data != nil {

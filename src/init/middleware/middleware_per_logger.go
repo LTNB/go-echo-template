@@ -1,10 +1,13 @@
 package middleware
 
 import (
-	es "github.com/LTNB/go-echo-template/src/init/databases/elasticsearch"
 	"github.com/labstack/echo"
+	es "main/src/init/databases/elasticsearch"
 )
 //TODO add request/response to map content base on bz
+/*
+ * init ES performance logger
+ */
 func MiddlewareESPerLogger(next echo.HandlerFunc) echo.HandlerFunc {
 	client := es.ClientSingleNode{
 		Address:             "http://localhost:9200",

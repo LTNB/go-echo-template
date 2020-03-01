@@ -9,8 +9,16 @@ const (
 	tableName = "account"
 )
 
+/*
+ * sample demo using go-dal
+ *  refer: github.com/LTNB/go-dal
+ */
+
 var accountHelper *AccountHelper
 
+/*
+ * model
+ */
 type Account struct {
 	ID       string `json:"id" primary:"id" form:"id"`
 	Email    string `json:"email" form:"email"`
@@ -20,14 +28,23 @@ type Account struct {
 	Password string `json:"password" form:"password"`
 }
 
+/*
+ * init helper
+ */
 type AccountHelper struct {
 	*sql.Helper
 }
 
+/*
+ * get Account helper
+ */
 func GetAccountHelper() AccountHelper {
 	return *accountHelper
 }
 
+/*
+ * init account helper
+ */
 func (aHelper *AccountHelper) Init() {
 	helper := sql.Helper{
 		TableName:      tableName,
@@ -39,24 +56,30 @@ func (aHelper *AccountHelper) Init() {
 	accountHelper = aHelper
 }
 
-func (accountHelper AccountHelper) FindByEmail(email string) (*Account, error) {
+/*
+ * find by email
+ */
+func (aHelper AccountHelper) FindByEmail(email string) (*Account, error) {
 	conditions := make(map[string]interface{})
 	conditions["email"] = email
 	orderBy := make(map[string]string)
 	orderBy["id"] = "ASC"
 	limit := 1
 	offset := 0
-	result, err := accountHelper.GetByConditions(conditions, orderBy, limit, offset, "")
+	result, err := aHelper.GetByConditions(conditions, orderBy, limit, offset, "")
 	if err != nil || len(result) == 0 {
 		return nil, err
 	}
 	return result[0].(*Account), nil
 }
 
-func (accountHelper AccountHelper) EmailIsExisted(email string) (bool, error) {
+/*
+ * check email is existed
+ */
+func (aHelper AccountHelper) EmailIsExisted(email string) (bool, error) {
 	conditions := make(map[string]interface{})
 	conditions["email"] = email
-	result, err := accountHelper.GetByConditions(conditions, nil, 0, -1, "")
+	result, err := aHelper.GetByConditions(conditions, nil, 0, -1, "")
 	if err != nil {
 		panic(err)
 	}
@@ -67,17 +90,3 @@ func (accountHelper AccountHelper) EmailIsExisted(email string) (bool, error) {
 
 }
 
-func (accountHelper AccountHelper) Login(email, password string) bool {
-	conditions := make(map[string]interface{})
-	conditions["email"] = email
-	conditions["password"] = password
-	conditions["active"] = true
-	result, err := accountHelper.GetByConditions(conditions, nil, 0, -1, "")
-	if err != nil {
-		panic(err)
-	}
-	if len(result) > 0 {
-		return true
-	}
-	return false
-}

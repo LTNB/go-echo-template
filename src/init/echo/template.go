@@ -1,17 +1,19 @@
-package echo
+package echo_init
 
 import (
-	config "github.com/LTNB/go-echo-template/src/init"
-	"github.com/LTNB/go-echo-template/src/init/i18n"
 	"github.com/labstack/echo/v4"
 	"html/template"
 	"io"
+	config "main/src/init"
+	"main/src/init/i18n"
 	"strings"
 )
 
 // Ref: https://echo.labstack.com/guide/templates
 
-// templateRenderer is a custom html/template renderer for Echo framework
+/*
+ * templateRenderer is a custom html/template renderer for Echo framework
+ */
 type templateRenderer struct {
 	directory          string
 	templateFileSuffix string

@@ -2,21 +2,30 @@ package controller
 
 import (
 	"fmt"
-	"github.com/LTNB/go-echo-template/src/init"
-	echo_conf "github.com/LTNB/go-echo-template/src/init/echo"
-	"github.com/LTNB/go-echo-template/src/init/i18n"
-	"github.com/LTNB/go-echo-template/src/models/user"
-	"github.com/LTNB/go-echo-template/src/utils"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"main/src/init"
+	echo_conf "main/src/init/echo"
+	"main/src/init/i18n"
+	"main/src/models/user"
+	"main/src/utils"
 )
 
+/*
+ * login bo wih email + password
+ * set default locate when login
+ */
 type LoginBo struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 	Locale   string `json:"locale"`
 }
 
+/*
+ * GET: ${/login}
+ * render login page: GET: ${login.html}
+ * redirect to ${/} if ${CheckSession} is true
+ */
 func login(c echo.Context) error {
 	sess := echo_conf.GetSession(c)
 	if sess != nil {
@@ -30,6 +39,12 @@ func login(c echo.Context) error {
 	return c.Render(http.StatusOK, "login", nil)
 }
 
+/*
+ * POST: /login
+ * data: ${LoginBo}
+ * generate ${token} + ${locale} and add to ${session}
+ * if ${locale} os nil => using default ${locale}
+ */
 func loginSubmit(c echo.Context) error {
 	var errMsg string
 	login := LoginBo{}
@@ -47,7 +62,7 @@ func loginSubmit(c echo.Context) error {
 	if err == nil && bo != nil && config.IsValid(bo.Password, login.Password) {
 		data := make(map[string]interface{}, 1)
 		data["email"] = bo.Email
-
+		//gen token as JWT
 		token, err := config.GenerateToken(data)
 		if err != nil {
 			errMsg = i18n.I18.Text("error_form_400")
@@ -72,6 +87,12 @@ end:
 		"editMode": false,
 	})
 }
+
+/*
+ * GET: /logout
+ * remove ${token}
+ * redirect to ${/login}
+ */
 
 func logout(c echo.Context) error {
 	echo_conf.RemoveSessionValue(c, "token")

@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/LTNB/go-echo-template/src/init/middleware"
 	"github.com/labstack/echo/v4"
+	"main/src/init/middleware"
 )
 
 const (
@@ -17,7 +17,11 @@ const (
 )
 var auth *middleware.RequiredAuthConf
 
+/*
+ * web application's routers
+ */
 func LoadRouterController(e *echo.Echo) {
+	// add default authentication
 	auth = middleware.GetDefaultRequiredAuthConfig()
 
 	e.GET(loginUrl, login)

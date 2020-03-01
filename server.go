@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/LTNB/go-echo-template/src"
+	"main/src"
 )
 
 func main() {

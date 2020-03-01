@@ -14,6 +14,9 @@ const defaultLocale = "vi-vn"
 
 var I18 I18n
 
+/*
+ * init i18n witt ${defaultLocale}
+ */
 func NewI18n(dir string) {
 	log.Printf("Loading i18n files from directory [%s]", dir)
 

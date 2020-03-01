@@ -1,15 +1,19 @@
 package controller
 
 import (
-	config "github.com/LTNB/go-echo-template/src/init"
-	echo_conf "github.com/LTNB/go-echo-template/src/init/echo"
-	"github.com/LTNB/go-echo-template/src/init/i18n"
-	"github.com/LTNB/go-echo-template/src/models/user"
-	"github.com/LTNB/go-echo-template/src/utils"
 	"github.com/labstack/echo/v4"
+	config "main/src/init"
+	echo_conf "main/src/init/echo"
+	"main/src/init/i18n"
+	"main/src/models/user"
+	"main/src/utils"
 	"net/http"
 )
 
+/*
+ * GET: ${/} or ${/cp/user}
+ * render: ${home.html}
+ */
 func home(c echo.Context) error {
 	accountHelper := user.GetAccountHelper()
 	k, _ := accountHelper.GetAllAsMap()
@@ -19,12 +23,21 @@ func home(c echo.Context) error {
 	})
 }
 
+/*
+ * GET: ${/cp/user/create}
+ * render: ${create_update_form.html}
+ */
 func createUser(c echo.Context) error {
 	return c.Render(http.StatusOK, "layout:create_update_form", map[string]interface{}{
 		"active": "home",
 	})
 }
 
+/*
+ * POST: ${/cp/user/create}
+ * data: ${Account}
+ * redirect ${/cp/user} if success
+ */
 func createUserSubmit(c echo.Context) error {
 	var errMsg string
 	locale := echo_conf.GetLocale(c)
@@ -58,6 +71,9 @@ end:
 	})
 }
 
+/*
+ * GET: ${/cp/user/edit/:id}
+ */
 func editUser(c echo.Context) error {
 	id := c.Param("id")
 
@@ -91,6 +107,11 @@ end:
 	})
 }
 
+/*
+ * GET: ${/cp/user/edit/:id}
+ * data: ${Account}
+ * redirect ${/cp/user} if success
+ */
 func editUserSubmit(c echo.Context) error {
 	bo := user.Account{}
 	var err error

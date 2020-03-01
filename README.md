@@ -12,7 +12,8 @@ Latest release: template-0.1.0
 - Support authenticate with JWT
 - Support i18n
 - Support throw performance log to statsd
-- Support stack deploy
+- Support docker build image
+- Support kubernetes stack
 
 ### Getting Started
 #### Start demo
@@ -23,3 +24,4 @@ Latest release: template-0.1.0
 4. Run ```go build```
 5. Run ```go run server.go```
 6. http://localhost:9000
+#### Docker

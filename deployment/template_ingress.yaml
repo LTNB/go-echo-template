@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: template
+spec:
+  tls:
+    - hosts: ["template.domain"]
+      secretName: templateSecret # path secret name
+  rules:
+    - host: template.domain
+      http:
+        paths:
+          - path:
+            backend:
+              serviceName: template
+              servicePort: template

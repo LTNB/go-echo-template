@@ -1,13 +1,13 @@
 package api
 
 import (
-	config "github.com/LTNB/go-echo-template/src/init"
-	echo_conf "github.com/LTNB/go-echo-template/src/init/echo"
-	"github.com/LTNB/go-echo-template/src/init/i18n"
-	"github.com/LTNB/go-echo-template/src/models/user"
-	"github.com/LTNB/go-echo-template/src/utils"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	config "main/src/init"
+	echo_conf "main/src/init/echo"
+	"main/src/init/i18n"
+	"main/src/models/user"
+	"main/src/utils"
 )
 
 func getUserInfo(c echo.Context) error {

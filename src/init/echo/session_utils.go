@@ -1,4 +1,4 @@
-package echo
+package echo_init
 
 import (
 	"github.com/gorilla/sessions"

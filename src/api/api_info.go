@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/LTNB/go-echo-template/src/utils"
 	"github.com/labstack/echo/v4"
+	"main/src/utils"
 	"net/http"
 )
 

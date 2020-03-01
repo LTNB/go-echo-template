@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 )
 
 type RequestLogger struct {
-	index string
+	index                string
 	s, d                 int64
 	appName, sender, msg string
 	info                 map[string]interface{}
@@ -19,13 +20,21 @@ func InitLogger(appName string) RequestLogger {
 	return instance
 }
 
+/*
+ * build model log
+ * create es's index is format: go-[app_name]-yyyy-mm-dd
+ */
 func (logger *RequestLogger) CreateLog(sender string) {
 	now := time.Now()
-	logger.index = fmt.Sprintf("go-%v", now.Unix())
+	index := strings.Join([]string{"go", logger.appName, string(now.Year()), string(now.Month()), string(now.Day())}, "-")
+	logger.index = index
 	logger.s = now.Unix()
-	logger.sender = sender;
+	logger.sender = sender
 }
 
+/*
+ * build log and write
+ */
 func (logger *RequestLogger) WriteLog(msg string, info map[string]interface{}, client ClientHandler) {
 	now := time.Now().Unix()
 	logger.d = logger.s - now

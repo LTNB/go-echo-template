@@ -21,6 +21,10 @@ type HoconConfig struct {
 	Conf *hocon.Config // configurations
 }
 
+
+/*
+ * load configuration to hocon
+ */
 func LoadAppConfig(file string) *HoconConfig {
 	dir, err := os.Getwd()
 	if err != nil {
@@ -37,6 +41,10 @@ func LoadAppConfig(file string) *HoconConfig {
 	return &config
 }
 
+
+/*
+ * find configuration file
+ */
 func InitAppConfig() *HoconConfig {
 	configFile := os.Getenv("APP_CONFIG")
 	if configFile == "" {

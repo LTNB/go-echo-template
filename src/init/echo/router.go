@@ -1,15 +1,17 @@
-package echo
+package echo_init
 
 import (
-	"github.com/LTNB/go-echo-template/src/init/i18n"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"main/src/init/i18n"
 )
 
 const (
 	staticPath = "/static"
 )
-
+/*
+ * init default logger and render page
+ */
 func InitEcho() *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
