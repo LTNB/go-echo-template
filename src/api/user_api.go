@@ -2,12 +2,12 @@ package api
 
 import (
 	"github.com/labstack/echo/v4"
-	"net/http"
 	config "main/src/init"
 	echo_conf "main/src/init/echo"
 	"main/src/init/i18n"
 	"main/src/models/user"
 	"main/src/utils"
+	"net/http"
 )
 
 func getUserInfo(c echo.Context) error {

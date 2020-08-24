@@ -12,5 +12,5 @@ spec:
         paths:
           - path:
             backend:
-              serviceName: template
+              serviceName: template_services.yaml
               servicePort: template

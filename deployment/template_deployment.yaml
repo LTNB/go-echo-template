@@ -5,7 +5,7 @@ metadata:
   labels:
     app: template
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: template
@@ -14,13 +14,10 @@ spec:
       labels:
         app: template
     spec:
-#      imagePullSecrets:
-#        - name: paste secrets repository's key
       containers:
         - name: template
           imagePullPolicy: Always
-#          image: path-to-repository/scom-template:version
-          image: scom-template
+          image: docker.io/baolam0307/go-template:latest
           ports:
             - containerPort: 9000
           env:
@@ -29,9 +26,9 @@ spec:
             - name: DRIVER_NAME
               value: "postgres"
             - name: DATA_SOURCE_NAME
-              value: "postgres://postgres:123456@localhost:5432/template?sslmode=disable&client_encoding=UTF-8"
+              value: "postgres://postgres:123456@34.87.123.126:5432/template?sslmode=disable&client_encoding=UTF-8"
             - name: JWT_EXPIRE
-              value: 600
+              value: "600"
             - name: JWT_SECRET
               value: "secret"
 
