@@ -21,7 +21,6 @@ type HoconConfig struct {
 	Conf *hocon.Config // configurations
 }
 
-
 /*
  * load configuration to hocon
  */
@@ -30,17 +29,22 @@ func LoadAppConfig(file string) *HoconConfig {
 	if err != nil {
 		panic(err)
 	}
-	defer os.Chdir(dir)
+	defer func() {
+		if err = os.Chdir(dir); err != nil {
+			panic(err)
+		}
+	}()
 
 	config := HoconConfig{}
 	log.Printf("Loading configurations from file [%s]", file)
 	confDir, confFile := path.Split(file)
-	os.Chdir(confDir)
+	if err = os.Chdir(confDir); err != nil {
+		panic(err)
+	}
 	config.File = file
 	config.Conf = hocon.LoadConfig(confFile)
 	return &config
 }
-
 
 /*
  * find configuration file

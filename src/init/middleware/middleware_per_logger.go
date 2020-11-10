@@ -8,18 +8,19 @@ import (
 /*
  * init ES performance logger
  */
-func MiddlewareESPerLogger(next echo.HandlerFunc) echo.HandlerFunc {
+func ESPerLogger(next echo.HandlerFunc) echo.HandlerFunc {
 	client := es.ClientSingleNode{
 		Address:             "http://localhost:9200",
 		MaxIdleConnsPerHost: 10,
 	}
-	client.Init()
+	if err := client.Init(); err != nil {
+		panic(err)
+	}
 	requestLogger := es.InitLogger("go-template")
 	return func(c echo.Context) error {
 		//content := make(map[string] interface{})
 		requestLogger.CreateLog("LamTNB") //add current user login
-		next(c)
 		//requestLogger.WriteLog("first send", map[string]interface{}{"name": "LamTNB"}, es.GetSingleNodeClient())
-		return nil
+		return next(c)
 	}
 }

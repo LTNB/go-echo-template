@@ -34,7 +34,9 @@ func newTemplateRenderer(directory, templateFileSuffix string, i18n i18n.I18n) *
 func (t *templateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
 	sess := GetSession(c)
 	flash := sess.Flashes()
-	sess.Save(c.Request(), c.Response())
+	if err := sess.Save(c.Request(), c.Response()); err != nil {
+		return err
+	}
 
 	if data == nil {
 		data = make(map[string]interface{})

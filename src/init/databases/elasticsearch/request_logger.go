@@ -48,8 +48,7 @@ func (logger *RequestLogger) WriteLog(msg string, info map[string]interface{}, c
 	body["msg"] = logger.msg
 	body["info"] = logger.info
 	bodyJson, _ := json.Marshal(body)
-	_, err := client.write(logger.index, strconv.FormatInt(now, 10), bodyJson)
-	if err != nil {
+	if _, err := client.write(logger.index, strconv.FormatInt(now, 10), bodyJson); err != nil {
 		fmt.Println(err)
 	}
 

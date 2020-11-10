@@ -122,15 +122,18 @@ func send(index string, docId string, body []byte, trans esapi.Transport) (map[s
 	// Perform the request with the client.
 	res, err := req.Do(context.Background(), trans)
 	if err != nil {
-		fmt.Println("Error getting response: %s", err)
+		fmt.Printf("Error getting response: %s \n", err)
 	}
-	defer res.Body.Close()
+	defer func() {
+		err = res.Body.Close()
+
+	}()
 	var r map[string]interface{}
 	if res.IsError() {
-		fmt.Printf("[%s] Error indexing document ID=%v", res.Status(), docId)
+		fmt.Printf("[%s] Error indexing document ID=%v\n", res.Status(), docId)
 	} else {
 		if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-			fmt.Printf("Error parsing the response body: %s", err)
+			fmt.Printf("Error parsing the response body: %s\n", err)
 		} else {
 			fmt.Printf("[%s] %s; version=%d", res.Status(), r["result"], int(r["_version"].(float64)))
 		}

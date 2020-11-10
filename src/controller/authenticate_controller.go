@@ -3,12 +3,12 @@ package controller
 import (
 	"fmt"
 	"github.com/labstack/echo/v4"
-	"net/http"
 	"main/src/init"
-	echo_conf "main/src/init/echo"
+	echoConf "main/src/init/echo"
 	"main/src/init/i18n"
 	"main/src/models/user"
 	"main/src/utils"
+	"net/http"
 )
 
 /*
@@ -27,7 +27,7 @@ type LoginBo struct {
  * redirect to ${/} if ${CheckSession} is true
  */
 func login(c echo.Context) error {
-	sess := echo_conf.GetSession(c)
+	sess := echoConf.GetSession(c)
 	if sess != nil {
 		token := sess.Values[auth.TokenKey]
 		if token != nil {
@@ -51,7 +51,6 @@ func loginSubmit(c echo.Context) error {
 	bo := &user.Account{}
 	var err error
 	accountHelper := user.GetAccountHelper()
-
 	if err := c.Bind(&login); err != nil {
 		errMsg = i18n.I18.Text("error_form_400")
 		goto end
@@ -69,8 +68,8 @@ func loginSubmit(c echo.Context) error {
 			goto end
 		}
 
-		echo_conf.SetSessionValue(c, "token", token)
-		echo_conf.SetSessionValue(c, "locale", login.Locale)
+		echoConf.SetSessionValue(c, "token", token)
+		echoConf.SetSessionValue(c, "locale", login.Locale)
 
 		c.Set("flashMsg", fmt.Sprintf(i18n.I18.FlashMsg(login.Locale, "login_success"), bo.Email))
 
@@ -95,6 +94,6 @@ end:
  */
 
 func logout(c echo.Context) error {
-	echo_conf.RemoveSessionValue(c, "token")
+	echoConf.RemoveSessionValue(c, "token")
 	return c.Redirect(http.StatusFound, "login")
 }

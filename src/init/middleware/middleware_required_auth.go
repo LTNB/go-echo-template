@@ -2,10 +2,10 @@ package middleware
 
 import (
 	"github.com/labstack/echo/v4"
-	"net/http"
-	"net/url"
 	config "main/src/init"
 	echo2 "main/src/init/echo"
+	"net/http"
+	"net/url"
 	"time"
 )
 

@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/labstack/echo/v4"
-	echo_md "github.com/labstack/echo/v4/middleware"
+	echoMd "github.com/labstack/echo/v4/middleware"
 	"main/src/init/middleware"
 )
 
@@ -25,7 +25,7 @@ var auth *middleware.RequiredAuthConf
 func LoadRouterController(e *echo.Echo) {
 	// add default authentication
 	auth = middleware.GetDefaultRequiredAuthConfig()
-	e.Use(echo_md.Gzip())
+	e.Use(echoMd.Gzip())
 	e.GET(loginUrl, login)
 	e.POST(loginUrl, loginSubmit)
 	e.GET(logoutUrl, logout, auth.MiddlewareRequiredAuth)

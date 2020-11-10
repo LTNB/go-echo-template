@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/labstack/echo/v4"
 	config "main/src/init"
-	echo_conf "main/src/init/echo"
+	echoConf "main/src/init/echo"
 	"main/src/init/i18n"
 	"main/src/models/user"
 	"main/src/utils"
@@ -15,7 +15,14 @@ func getUserInfo(c echo.Context) error {
 	account := user.Account{}
 	account.ID = id
 	accountHelper := user.GetAccountHelper()
-	accountHelper.GetOne(&account)
+	if err := accountHelper.GetOne(&account); err != nil {
+		return c.JSON(http.StatusOK, utils.ResponseJson{
+			Status:  http.StatusInternalServerError,
+			Message: err.Error(),
+			Data:    nil,
+		})
+	}
+
 	return c.JSON(http.StatusOK, utils.ResponseJson{
 		Status:  http.StatusOK,
 		Message: "Ok",
@@ -36,11 +43,24 @@ func getAll(c echo.Context) error {
 func create(c echo.Context) error {
 	accountHelper := user.GetAccountHelper()
 	bo := user.Account{}
-	c.Bind(&bo)
+	if err := c.Bind(&bo); err != nil {
+		return c.JSON(http.StatusOK, utils.ResponseJson{
+			Status:  http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
 	node, _ := utils.NewNode(1)
 	bo.ID = node.Generate().String()
 	bo.Password, _ = config.HashString(bo.Password)
-	accountHelper.Create(bo)
+
+	if _, err := accountHelper.Create(bo); err != nil {
+		return c.JSON(http.StatusOK, utils.ResponseJson{
+			Status:  http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
 	return c.JSON(http.StatusOK, utils.ResponseJson{
 		Status:  http.StatusOK,
 		Message: "Ok",
@@ -53,10 +73,10 @@ func deleteUser(c echo.Context) error {
 	var errMsg string
 	var affected int64
 	var err error
-	locale := echo_conf.GetLocale(c)
+	locale := echoConf.GetLocale(c)
 
 	accountHelper := user.GetAccountHelper()
-	if id =="1" {
+	if id == "1" {
 		errMsg = i18n.I18.FlashMsg(locale, "error_delete_demo_account")
 		goto end
 	}
@@ -65,18 +85,18 @@ func deleteUser(c echo.Context) error {
 		goto end
 	}
 
-	affected, err = accountHelper.Delete(user.Account{ID: id,})
+	affected, err = accountHelper.Delete(user.Account{ID: id})
 
 	if affected == 0 || err != nil {
 		goto end
 	}
 	return c.JSON(http.StatusOK, utils.ResponseJson{
 		Status:  http.StatusOK,
-		Message: i18n.I18.FlashMsg(locale, "success_api_delete", ),
+		Message: i18n.I18.FlashMsg(locale, "success_api_delete"),
 		Data:    true,
 	})
 end:
-	return c.JSON(http.StatusOK,  utils.ResponseJson{
+	return c.JSON(http.StatusOK, utils.ResponseJson{
 		Status:  http.StatusBadRequest,
 		Message: errMsg,
 		Data:    false,

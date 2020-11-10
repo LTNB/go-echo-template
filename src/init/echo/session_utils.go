@@ -20,7 +20,9 @@ func SetSessionValue(c echo.Context, key string, value interface{}) {
 	} else {
 		sess.Values[key] = value
 	}
-	sess.Save(c.Request(), c.Response())
+	if err := sess.Save(c.Request(), c.Response()); err != nil {
+		panic(err)
+	}
 }
 
 func GetLocale(c echo.Context) string {
@@ -35,12 +37,15 @@ func GetLocale(c echo.Context) string {
 func RemoveSessionValue(c echo.Context, key string) {
 	sess := GetSession(c)
 	delete(sess.Values, key)
-	sess.Save(c.Request(), c.Response())
+	if err := sess.Save(c.Request(), c.Response()); err != nil {
+		panic(err)
+	}
 }
 
 func AddFlashMsg(c echo.Context, msg string) {
 	sess := GetSession(c)
 	sess.AddFlash(msg)
-	sess.Save(c.Request(), c.Response())
+	if err := sess.Save(c.Request(), c.Response()); err != nil {
+		panic(err)
+	}
 }
-

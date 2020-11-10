@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/labstack/echo/v4"
 	config "main/src/init"
-	echo_conf "main/src/init/echo"
+	echoConf "main/src/init/echo"
 	"main/src/init/i18n"
 	"main/src/models/user"
 	"main/src/utils"
@@ -40,7 +40,7 @@ func createUser(c echo.Context) error {
  */
 func createUserSubmit(c echo.Context) error {
 	var errMsg string
-	locale := echo_conf.GetLocale(c)
+	locale := echoConf.GetLocale(c)
 	bo := user.Account{}
 
 	accountHelper := user.GetAccountHelper()
@@ -49,18 +49,17 @@ func createUserSubmit(c echo.Context) error {
 	if err := c.Bind(&bo); err != nil {
 		errMsg = i18n.I18.FlashMsg(locale, "error_form_400")
 	}
-	ok, err := accountHelper.EmailIsExisted(bo.Email)
-	if ok || err != nil {
+	if ok, err := accountHelper.EmailIsExisted(bo.Email); ok || err != nil {
 		errMsg = i18n.I18.FlashMsg(locale, "error_form_email_existed")
 		goto end
 	}
-
 	bo.ID = node.Generate().String()
-
 	bo.Password, _ = config.HashString(bo.Password)
-
-	accountHelper.Create(bo)
-	echo_conf.AddFlashMsg(c, i18n.I18.FlashMsg(locale,"success_form_create", bo.Email))
+	if _, err := accountHelper.Create(bo); err != nil {
+		errMsg = i18n.I18.FlashMsg(locale, "error_form_400")
+		goto end
+	}
+	echoConf.AddFlashMsg(c, i18n.I18.FlashMsg(locale,"success_form_create", bo.Email))
 	return c.Redirect(http.StatusFound, homeUrl)
 end:
 	return c.Render(http.StatusOK, "layout:create_update_form", map[string]interface{}{
@@ -78,7 +77,7 @@ func editUser(c echo.Context) error {
 	id := c.Param("id")
 
 	var errMsg string
-	locale := echo_conf.GetLocale(c)
+	locale := echoConf.GetLocale(c)
 
 	accountHelper := user.GetAccountHelper()
 	bo := user.Account{}
@@ -120,14 +119,18 @@ func editUserSubmit(c echo.Context) error {
 	accountHelper := user.GetAccountHelper()
 	userDb := user.Account{}
 	var errMsg, warnMsg string
-	locale := echo_conf.GetLocale(c)
+	locale := echoConf.GetLocale(c)
 
 	if err := c.Bind(&bo); err != nil {
 		errMsg = i18n.I18.FlashMsg(locale,"error_form_400")
 		goto end
 	}
 	userDb.ID = bo.ID
-	accountHelper.GetOne(&userDb)
+	err = accountHelper.GetOne(&userDb)
+	if err != nil {
+		errMsg = i18n.I18.FlashMsg(locale,"error_form_400")
+		goto end
+	}
 
 	if userDb.Email == "" {
 		errMsg = i18n.I18.FlashMsg(locale,"error_user_not_found")
@@ -159,7 +162,7 @@ func editUserSubmit(c echo.Context) error {
 		warnMsg = i18n.I18.FlashMsg(locale,"warn_user_not_change")
 		goto end
 	}
-	echo_conf.AddFlashMsg(c, i18n.I18.FlashMsg(locale,"success_form_update", bo.Email))
+	echoConf.AddFlashMsg(c, i18n.I18.FlashMsg(locale,"success_form_update", bo.Email))
 	return c.Redirect(http.StatusFound, homeUrl)
 
 end:

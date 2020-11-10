@@ -49,7 +49,7 @@ func ProfilerWithConfig(config ProfilerConfig) echo.MiddlewareFunc {
 
 	client, err := statsd.New(statsd.Address(config.Address))
 	if err != nil {
-		go fmt.Println("Failed to initialized Statsd Client %s", err)
+		go fmt.Printf("Failed to initialized Statsd Client %s \n", err)
 	}
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
@@ -61,7 +61,10 @@ func ProfilerWithConfig(config ProfilerConfig) echo.MiddlewareFunc {
 			req := c.Request()
 			res := c.Response()
 			t := client.NewTiming()
-			next(c)
+
+			if err = next(c); err != nil {
+				panic(err)
+			}
 			s := strings.ToLower(fmt.Sprintf("response.%s.%s.%s.%d", config.Service, req.Method, req.URL.Path, res.Status))
 			if os.Getenv("LOG_LEVEL") == "debug" {
 				fmt.Println(s)
